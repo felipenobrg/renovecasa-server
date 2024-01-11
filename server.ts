@@ -1,8 +1,8 @@
-import express, { Request, Response } from "express";
 import { PrismaClient } from '@prisma/client';
-import cors from "cors";
-import helmet from "helmet";
-import bcrypt from "bcrypt";
+import express, { Request, Response } from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+import bcrypt from 'bcrypt';
 
 const app = express();
 
@@ -12,7 +12,7 @@ app.use(cors());
 
 const prisma = new PrismaClient({
   datasources: {
-    default: {
+    db: {
       url: process.env.DATABASE_URL,
     },
   },
@@ -47,7 +47,6 @@ app.post("/register", async (req: Request, res: Response) => {
     res.status(500).send("Erro no servidor");
   }
 });
-
 
 app.post("/login", async (req: Request, res: Response) => {
   try {
