@@ -73,7 +73,7 @@ app.post("/login", async (req: Request, res: Response) => {
   }
 });
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 'DATABASE_URL';
 app.listen(PORT, () => {
   console.log(`Rodando na porta ${PORT}`);
 });
