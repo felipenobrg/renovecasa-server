@@ -8,7 +8,8 @@
     "start": "node index.ts",
     "devStart": "nodemon --exec ts-node server.ts",
     "vercel-build": "npm run migrate",
-    "build": "tsc" 
+    "build": "tsc",
+    "migrate": "migrate up"
   },
   "author": "",
   "license": "ISC",
