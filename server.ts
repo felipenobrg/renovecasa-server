@@ -1,12 +1,12 @@
 import { PrismaClient } from '@prisma/client';
 import express, { Request, Response } from 'express';
 import cors from 'cors';
-import helmet from 'helmet';
+// import helmet from 'helmet';
 import bcrypt from 'bcrypt';
 
 const app = express();
 
-app.use(helmet());
+// app.use(helmet());
 app.use(express.json());
 app.use(cors());
 
@@ -73,7 +73,7 @@ app.post("/login", async (req: Request, res: Response) => {
   }
 });
 
-const PORT = process.env.PORT || 'DATABASE_URL';
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Rodando na porta ${PORT}`);
 });
