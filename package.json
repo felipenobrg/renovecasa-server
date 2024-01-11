@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.ts",
     "devStart": "nodemon --exec ts-node server.ts",
-    "vercel-build": "npm run migrate:latest",
+    "vercel-build": "npm run migrate",
     "build": "tsc" 
   },
   "author": "",
