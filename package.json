@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.ts",
     "devStart": "nodemon --exec ts-node server.ts",
-    "vercel-build": "npx knex migrate:latest"
+    "vercel-build": "npm run migrate:latest",
+    "build": "tsc" 
   },
   "author": "",
   "license": "ISC",
