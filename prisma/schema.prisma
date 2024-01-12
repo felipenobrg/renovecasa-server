@@ -7,9 +7,28 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Cart {
+  id        Int        @id @default(autoincrement())
+  userId    Int        @unique
+  user      User       @relation(fields: [userId], references: [id])
+  cartItems CartItem[]
+}
+
+model CartItem {
+  id        Int    @id @default(autoincrement())
+  cartId    Int
+  cart      Cart   @relation(fields: [cartId], references: [id])
+  imgSrc    String
+  title     String
+  price     String
+  productId String
+  quantity  Int
+}
+
 model User {
   id       Int    @id @default(autoincrement())
   userName String
   email    String @unique
   password String
+  cart     Cart?
 }
