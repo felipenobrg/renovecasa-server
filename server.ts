@@ -78,7 +78,7 @@ app.post("/login", async (req: Request, res: Response) => {
     });
 
     if (!user) {
-      return res.status(400).send({ msg: "Email ou senha incorretos" })
+      return res.status(400).send({ msg: "Email ou senha incorretos" });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
