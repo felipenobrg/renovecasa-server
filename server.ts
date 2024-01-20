@@ -162,6 +162,7 @@ app.get("/get-cart", async (req: AuthenticatedRequest, res: Response) => {
     res.status(500).send("Internal Server Error");
   }
 });
+
 app.post("/add-to-cart", async (req: AuthenticatedRequest, res: Response) => {
   const { userId, cartItems } = req.body;
 
@@ -171,6 +172,7 @@ app.post("/add-to-cart", async (req: AuthenticatedRequest, res: Response) => {
         .status(400)
         .send({ msg: "UserId está faltando no corpo da requisição" });
     }
+
 
     const user = await prisma.user.findUnique({
       where: { id: userId },
@@ -194,14 +196,16 @@ app.post("/add-to-cart", async (req: AuthenticatedRequest, res: Response) => {
       cartId = user.cart.id;
     }
 
-    const cartItemsArray = cartItems.map((item: any) => ({
-      cartId: cartId!,
-      imgSrc: item.imgSrc,
-      title: item.title,
-      price: item.price,
-      productId: item.productId,
-      quantity: item.quantity,
-    }));
+    const cartItemsArray = Array.isArray(cartItems)
+      ? cartItems.map((item: any) => ({
+          cartId: cartId!,
+          imgSrc: item.imgSrc,
+          title: item.title,
+          price: item.price,
+          productId: item.productId,
+          quantity: item.quantity,
+        }))
+      : [];
 
     await prisma.cartItem.createMany({
       data: cartItemsArray,
@@ -213,6 +217,7 @@ app.post("/add-to-cart", async (req: AuthenticatedRequest, res: Response) => {
     res.status(500).send("Internal Server Error");
   }
 });
+
 app.delete(
   "/remove-from-cart",
   async (req: AuthenticatedRequest, res: Response) => {
