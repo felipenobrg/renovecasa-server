@@ -78,7 +78,7 @@ app.post("/login", async (req: Request, res: Response) => {
     });
 
     if (!user) {
-      return res.status(400).send({ msg: "Email ou senha incorretos" })
+      return res.status(400).send({ msg: "Email ou senha incorretos" });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
@@ -120,7 +120,6 @@ app.get("/get-user", async (req: AuthenticatedRequest, res: Response) => {
     const user = await prisma.user.findUnique({
       where: { id: userIdNumber },
     });
-    
 
     if (!user) {
       return res.status(404).send({ msg: "User not found" });
@@ -172,7 +171,6 @@ app.post("/add-to-cart", async (req: AuthenticatedRequest, res: Response) => {
         .status(400)
         .send({ msg: "UserId está faltando no corpo da requisição" });
     }
-
 
     const user = await prisma.user.findUnique({
       where: { id: userId },
@@ -242,7 +240,9 @@ app.delete(
       }
 
       if (productId) {
-        const cartItem = user.cart!.cartItems.find(item => item.productId === productId);
+        const cartItem = user.cart!.cartItems.find(
+          (item) => item.productId === productId
+        );
 
         if (!cartItem) {
           return res.status(404).send({ msg: "Product not found in the cart" });
