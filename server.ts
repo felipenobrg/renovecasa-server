@@ -8,7 +8,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cors({
-  origin: "renovecasajp.com",
+  origin: "https://renovecasajp.com",
   credentials: true,
 }));
 
