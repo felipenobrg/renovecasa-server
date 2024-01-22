@@ -209,17 +209,24 @@ app.post("/add-to-cart", async (req: AuthenticatedRequest, res: Response) => {
       cartId = user.cart.id;
     }
 
+    interface CartItem {
+      imgSrc: string;
+      title: string;
+      price: number;
+      productId: string;
+      quantity: number;
+    }
+    
     const cartItemsArray = Array.isArray(cartItems)
-      ? cartItems.map((item: any) => ({
-          cartId: cartId!,
-          imgSrc: item.imgSrc,
-          title: item.title,
-          price: item.price,
-          productId: item.productId,
-          quantity: item.quantity,
-        }))
-      : [];
-
+    ? cartItems.map((item: CartItem) => ({
+        cartId: cartId!,
+        imgSrc: item.imgSrc,
+        title: item.title,
+        price: item.price.toString(), 
+        productId: item.productId,
+        quantity: item.quantity,
+      }))
+    : [];
     await prisma.cartItem.createMany({
       data: cartItemsArray,
     });
