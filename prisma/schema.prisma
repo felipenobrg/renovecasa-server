@@ -17,18 +17,18 @@ model User {
 
 model Cart {
   id        Int        @id @default(autoincrement())
+  userId    Int        @unique
   user      User       @relation(fields: [userId], references: [id])
   cartItems CartItem[]
-  userId    Int        @unique
 }
 
 model CartItem {
   id        Int    @id @default(autoincrement())
-  cart      Cart   @relation(fields: [cartId], references: [id])
-  cartId    Int
   imgSrc    String
   title     String
   price     String
   productId String
   quantity  Int
+  cartId    Int
+  cart      Cart   @relation(fields: [cartId], references: [id])
 }
