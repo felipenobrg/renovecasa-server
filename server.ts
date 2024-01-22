@@ -3,8 +3,8 @@ import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
 import bcrypt from "bcrypt";
 const jwt = require("jsonwebtoken");
-require("dotenv").config();
 const app = express();
+require("dotenv").config();
 
 app.use(express.json());
 app.use(cors({
