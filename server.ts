@@ -107,8 +107,8 @@ app.post("/login", async (req: Request, res: Response) => {
       res.status(400).send({ msg: "Email ou senha incorretos" });
     }
   } catch (error) {
-    console.error(error);
-    res.status(500).send("Erro no servidor");
+    console.error("Error in /login route:", error);
+    res.status(500).send("Internal Server Error");
   }
 });
 
