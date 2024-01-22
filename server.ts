@@ -7,7 +7,10 @@ require("dotenv").config();
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: "renovecasajp.com",
+  credentials: true,
+}));
 
 const prisma = new PrismaClient();
 
