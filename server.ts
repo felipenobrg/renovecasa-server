@@ -12,7 +12,7 @@ app.use(express.json({ limit: '1mb' }));
 app.use(helmet());
 
 app.use(cors({
-  origin: ["https://renovecasajp.com"],
+  // origin: ["https://renovecasajp.com"],
   methods: ["GET", "POST", "DELETE"],
   credentials: true,
 }));
