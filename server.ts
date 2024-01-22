@@ -12,7 +12,13 @@ app.use(cors({
   credentials: true,
 }));
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient({
+  datasources: {
+    db: {
+      url: process.env.DATABASE_URL,
+    },
+  },
+});
 
 const saltRounds: number = 10;
 
