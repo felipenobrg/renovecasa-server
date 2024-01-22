@@ -1,10 +1,10 @@
 import { PrismaClient } from "@prisma/client";
 import express, { NextFunction, Request, Response } from "express";
+require("dotenv").config();
 import cors from "cors";
 import bcrypt from "bcrypt";
 const jwt = require("jsonwebtoken");
 const app = express();
-require("dotenv").config();
 
 app.use(express.json());
 app.use(cors({
@@ -90,9 +90,14 @@ app.post("/login", async (req: Request, res: Response) => {
       return res.status(400).send({ msg: "Email ou senha incorretos" });
     }
 
+    if (!process.env.JWT_PASS) {
+      console.error("JWT_PASS not set in environment variables");
+      return res.status(500).send("Internal Server Error");
+    }
+
     const isMatch = await bcrypt.compare(password, user.password);
 
-    const token = jwt.sign({ id: user.id }, process.env.JWT_PASS ?? "", {
+    const token = jwt.sign({ id: user.id }, process.env.JWT_PASS, {
       expiresIn: "8h",
     });
 
@@ -111,6 +116,7 @@ app.post("/login", async (req: Request, res: Response) => {
     res.status(500).send("Internal Server Error");
   }
 });
+
 
 app.get("/get-user", async (req: AuthenticatedRequest, res: Response) => {
   try {
