@@ -4,11 +4,16 @@ require("dotenv").config();
 import cors from "cors";
 import bcrypt from "bcrypt";
 const jwt = require("jsonwebtoken");
+const helmet = require("helmet");
+
 const app = express();
 
-app.use(express.json());
+app.use(express.json({ limit: '1mb' }));
+app.use(helmet());
+
 app.use(cors({
-  origin: "https://renovecasajp.com",
+  origin: ["https://renovecasajp.com"],
+  methods: ["GET", "POST", "DELETE"],
   credentials: true,
 }));
 
@@ -116,7 +121,6 @@ app.post("/login", async (req: Request, res: Response) => {
     res.status(500).send("Internal Server Error");
   }
 });
-
 
 app.get("/get-user", async (req: AuthenticatedRequest, res: Response) => {
   try {
@@ -286,6 +290,7 @@ app.delete(
     }
   }
 );
+
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Rodando na porta ${PORT}`);
