@@ -5,6 +5,8 @@ import cors from "cors";
 import bcrypt from "bcrypt";
 const jwt = require("jsonwebtoken");
 const helmet = require("helmet");
+const nodemailer = require("nodemailer");
+
 
 const app = express();
 
@@ -76,12 +78,39 @@ app.post("/register", async (req: Request, res: Response) => {
       },
     });
 
+    sendConfirmationEmail(user.email, user.id);
     res.send({ msg: "Cadastrado com sucesso" });
   } catch (error) {
     console.error(error);
     res.status(500).send("Erro no servidor");
   }
 });
+
+const sendConfirmationEmail = async (toEmail: string, userId: number) => {
+  try {
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASSWORD,
+      },
+    });
+
+    const confirmationLink = `https://renovecasajp.com/confirm/${userId}`;
+    
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: toEmail,
+      subject: "Confirm your registration",
+      text: `Click the following link to confirm your registration: ${confirmationLink}`,
+    };
+
+    await transporter.sendMail(mailOptions);
+    console.log("Confirmation email sent successfully");
+  } catch (error) {
+    console.error("Error sending confirmation email:", error);
+  }
+};
 
 app.post("/login", async (req: Request, res: Response) => {
   try {
